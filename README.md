@@ -1,6 +1,11 @@
 # admiral
 
+## Overview
+
+This admiral repo lets you orchestrate the deployment and management of a captain cluster with all the services. When running the `terraform`,`helm`, and other CLI commands mentioned in this `README.md`, please assume you are a level above this folder. For example, the `-chdir` flag means running the terraform within a particular folder, and the `-state` lets you save it somewhere else. The ideal way to look at this `admiral` repository is that it is a software package. Right now, it's a series of git repositories CLI commands, but we plan to automate this further to where we have a single API call to do all this automation for you.
+
 ### Deploy cluster
+
 See docs in: <https://github.com/GlueOps/terraform-module-cloud-gcp-kubernetes-cluster>
 
 ```bash
