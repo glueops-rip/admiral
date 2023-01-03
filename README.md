@@ -10,7 +10,7 @@ See docs in: <https://github.com/GlueOps/terraform-module-cloud-gcp-kubernetes-c
 
 ```bash
 terraform -chdir=admiral/kubernetes-cluster/gcp init
-terraform -chdir=admiral/kubernetes-cluster/gcp apply -state=$(pwd)/terraform_states/kubernetes-cluster.terraform.tfstate -var-file=$(pwd)/glueops_configuration.tfvars
+terraform -chdir=admiral/kubernetes-cluster/gcp apply -state=$(pwd)/terraform_states/kubernetes-cluster.terraform.tfstate -var-file=$(pwd)/captain_configuration.tfvars
 ```
 
 ### Intialize Vault
@@ -26,17 +26,17 @@ terraform -chdir=admiral/hashicorp-vault/init apply -state=$(pwd)/terraform_stat
 
 ```bash
 terraform -chdir=admiral/hashicorp-vault/configuration init
-terraform -chdir=admiral/hashicorp-vault/configuration apply -state=$(pwd)/terraform_states/vault-configuration.terraform.tfstate -var-file=$(pwd)/glueops_configuration.tfvars
+terraform -chdir=admiral/hashicorp-vault/configuration apply -state=$(pwd)/terraform_states/vault-configuration.terraform.tfstate -var-file=$(pwd)/captain_configuration.tfvars
 ```
 
-Example `glueops_configuration.tfvars`:
+Example `captain_configuration.tfvars`:
 
 ```hcl
 kubernetes_cluster_configurations = {
   network_ranges = {
     "kubernetes_pods" : "10.65.0.0/16",
     "kubernetes_services" : "10.64.224.0/20",
-    "public_primary" : "10.64.64.0/23"
+    "kubernetes_nodes" : "10.64.64.0/23"
   }
   project_id = "glueops-test-1"
   region     = "us-central1"
