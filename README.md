@@ -1,7 +1,7 @@
 # admiral
 
 ### Deploy cluster
-<https://github.com/GlueOps/terraform-module-cloud-gcp-kubernetes-cluster>
+See docs in: <https://github.com/GlueOps/terraform-module-cloud-gcp-kubernetes-cluster>
 
 terraform -chdir=admiral/kubernetes-cluster/gcp init
 terraform -chdir=admiral/kubernetes-cluster/gcp apply -state=$(pwd)/terraform_states/kubernetes-cluster.terraform.tfstate -var-file=$(pwd)/glueops_configuration.tfvars
