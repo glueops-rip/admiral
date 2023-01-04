@@ -4,7 +4,7 @@
 
 This admiral repo lets you orchestrate the deployment and management of a captain cluster with all the services. When running the `terraform`,`helm`, and other CLI commands mentioned in this `README.md`, please assume you are a level above this folder. For example, the `-chdir` flag means running the terraform within a particular folder, and the `-state` lets you save it somewhere else. The ideal way to look at this `admiral` repository is that it is a software package. Right now, it's a series of git repositories CLI commands, but we plan to automate this further to where we have a single API call to do all this automation for you.
 
-### Deploy cluster
+### Deploy cluster GCP
 
 See docs in: <https://github.com/GlueOps/terraform-module-cloud-gcp-kubernetes-cluster>
 
@@ -12,6 +12,9 @@ See docs in: <https://github.com/GlueOps/terraform-module-cloud-gcp-kubernetes-c
 terraform -chdir=admiral/kubernetes-cluster/gcp init
 terraform -chdir=admiral/kubernetes-cluster/gcp apply -state=$(pwd)/terraform_states/kubernetes-cluster.terraform.tfstate -var-file=$(pwd)/captain_configuration.tfvars
 ```
+
+
+
 
 ### Intialize Vault
 
@@ -22,12 +25,14 @@ terraform -chdir=admiral/hashicorp-vault/init init
 terraform -chdir=admiral/hashicorp-vault/init apply -state=$(pwd)/terraform_states/vault-init.terraform.tfstate
 ```
 
+
 ### Configure Vault
 
 ```bash
 terraform -chdir=admiral/hashicorp-vault/configuration init
 terraform -chdir=admiral/hashicorp-vault/configuration apply -state=$(pwd)/terraform_states/vault-configuration.terraform.tfstate -var-file=$(pwd)/captain_configuration.tfvars
 ```
+
 
 Example `captain_configuration.tfvars`:
 
@@ -101,3 +106,17 @@ vault_configurations = {
   ]
 }
 ```
+
+
+### Post Deployment or Maintenance Activities
+
+## Post Deployment and/or Maintenance Activities
+
+```
+gcloud auth activate-service-account --key-file=creds.json
+export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+gcloud container clusters get-credentials gke --region us-central1 --project <PROJECT_ID>
+```
+
+### Vault Maintenance
+todo: kubectl + connect to svc details
