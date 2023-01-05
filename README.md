@@ -8,6 +8,17 @@ This admiral repo lets you orchestrate the deployment and management of a captai
 
 **IMPORTANT: You can only use 1 Cloud Provider**
 
+#### Amazon Web Services (AWS)
+
+#### Deployment
+
+See docs in: https://github.com/GlueOps/terraform-module-cloud-aws-kubernetes-cluster
+
+```bash
+terraform -chdir=admiral/kubernetes-cluster/aws init
+terraform -chdir=admiral/kubernetes-cluster/aws apply -state=$(pwd)/terraform_states/kubernetes-cluster.terraform.tfstate -var-file=$(pwd)/captain_configuration.tfvars
+```
+
 #### Google Cloud Platform (GCP)
 
 ##### Deployment
