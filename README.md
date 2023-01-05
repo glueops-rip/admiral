@@ -19,6 +19,12 @@ terraform -chdir=admiral/kubernetes-cluster/aws init
 terraform -chdir=admiral/kubernetes-cluster/aws apply -state=$(pwd)/terraform_states/kubernetes-cluster.terraform.tfstate -var-file=$(pwd)/captain_configuration.tfvars
 ```
 
+##### Authentication for maintenance/post-deployment tasks
+
+```bash
+aws eks update-kubeconfig --region us-west-2 --name captain-cluster
+```
+
 #### Google Cloud Platform (GCP)
 
 ##### Deployment
