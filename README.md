@@ -49,6 +49,7 @@ gcloud container clusters get-credentials gke --region us-central1 --project <PR
 #### Prerequisites
 
 - You need to have a connection to the k8s server. Per your Cloud provider the authentication methods will vary.
+- You need to have a proper `captain.yaml` (see below)
 
 #### Deploying the GlueOps Platform
 
@@ -87,3 +88,60 @@ terraform -chdir=admiral/hashicorp-vault/configuration apply -state=$(pwd)/terra
   - Don't forget to add the SSL cert to your CA Store by running: `export SSL_CERT_FILE=$(pwd)/ca.crt`
 - When making IaC updates to the Kubernetes cluster itself (ex., new node pools or updating cluster version, VPC peering, etc.) you must authenticate to that cloud provider and those instructions will be in the terraform module that you used to deploy the cluster in the `##### Deployment` section
 - Remember all commands in this document assume you are "above" the admiral folder.
+
+
+
+
+## Making your captain.yaml
+
+- `captain_domain` is pretty straight forward. It'll be used as the suffix url for argocd, grafana, vault, and any other services that come out of the box in the glueops platform.
+- `cloudflare_api_token` should be a token with edit access to your zone. It will be used by `cert-manager` to create SSL certs via DNS verification through ZeroSSL and it will be used by `external-dns` to upsert DNS records in cloudflare so that your services can be exposed on the web via DNS.
+- `zerossl_eab_kid` and `zerossl_eab_hmac_key` can be obtained for free with an account under zerossl.com
+- todo: finish these docs
+
+
+```yaml
+captain_domain: <yournamesgoeshere.glueops.rocks>
+cloudflare_api_token: XXXXXXXXXXXXXXXXXXXXXXXXXX
+certManager:
+  zerossl_eab_kid: XXXXXXXXXXXXXXXXXXXXXXXXXX
+  zerossl_eab_hmac_key: XXXXXXXXXXXXXXXXXXXXXXXXXX
+gitHub:
+  customer_github_org_and_team: "glueops-rocks:developers"
+grafana:
+  github_client_id: XXXXXXXXXXXXXXXXXXXXXXXXXX
+  github_client_secret: XXXXXXXXXXXXXXXXXXXXXXXXXX
+  github_org_names: GlueOps glueops-rocks
+argo-cd:
+  server:
+    ingress:
+      hosts: ["argocd.yournamesgoeshere.glueops.rocks"]
+      tls: 
+        - 
+          hosts: 
+            - argocd.yournamesgoeshere.glueops.rocks
+          secretName: argocd-tls
+    config:
+      url: "https://argocd.yournamesgoeshere.glueops.rocks"
+      dex.config: |
+        connectors:
+          - type: github
+            id: github
+            name: GitHub
+            config:
+              clientID: XXXXXXXXXXXXXXXXXXXXXXXXXX
+              clientSecret: XXXXXXXXXXXXXXXXXXXXXXXXXX
+              orgs:
+              - name: GlueOps
+              - name: glueops-rocks
+              loadAllGroups: true
+    rbacConfig:
+      policy.csv: |
+        g, GlueOps:argocd_super_admins, role:admin
+        g, glueops-rocks:developers, role:developers
+        p, role:developers, clusters, get, *, allow
+        p, role:developers, *, get, development, allow
+        p, role:developers, repositories, *, development/*, allow
+        p, role:developers, applications, *, development/*, allow
+        p, role:developers, exec, *, development/*, allow
+```
