@@ -128,10 +128,6 @@ terraform -chdir=admiral/hashicorp-vault/configuration apply -state=$(pwd)/terra
       ```
 
 
-
-
-
-
 ## Making your captain.yaml
 
 - `captain_domain` -- The subdomain for the services on your cluster.  It will be used as the suffix url for argocd, grafana, vault, and any other services that come out of the box in the glueops platform.  _Note: Be sure this subdomain doesn't conflict with other subdomains already in use._
