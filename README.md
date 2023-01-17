@@ -65,9 +65,15 @@ helm template captain -f captain.yaml --dependency-update --namespace=glueops-co
 helm template captain -f captain.yaml --dependency-update --namespace=glueops-core ./admiral/glueops-platform | kubectl -n glueops-core apply -f -
 ```
 
-**_Notes:_** 
-**_It can take up to 10 minutes for the services on kubernetes to come up.  Login to ArgoCD with `admin` credentials to monitor the status of the deployment. See `Cheat Sheet` below for details about logging in if you need them._**
-**_You run the command twice because the CRD's get installed on the very first deployment._**
+To check items pending apply, use:
+
+```bash
+helm template captain -f captain.yaml --dependency-update --namespace=glueops-core ./admiral/glueops-platform | kubectl -n glueops-core diff -f -
+```
+
+**_Notes:_**<br>
+**_- It can take up to 10 minutes for the services on kubernetes to come up.  Login to ArgoCD with `admin` credentials to monitor the status of the deployment. See `Cheat Sheet` below for details about logging in if you need them._**<br>
+**_- You run the command twice because the CRD's get installed on the very first deployment._**
 
 ### Vault Setup
 
@@ -132,7 +138,7 @@ terraform -chdir=admiral/hashicorp-vault/configuration apply -state=$(pwd)/terra
 
 - `captain_domain` -- The subdomain for the services on your cluster.  It will be used as the suffix url for argocd, grafana, vault, and any other services that come out of the box in the glueops platform.  _Note: Be sure this subdomain doesn't conflict with other subdomains already in use._
 - `cloudflare_api_token` should be a token with edit access to your zone. It will be used by `cert-manager` to create SSL certs via DNS verification through ZeroSSL and it will be used by `external-dns` to upsert DNS records in cloudflare so that your services can be exposed on the web via DNS. ([docs to create token](https://developers.cloudflare.com/fundamentals/api/get-started/create-token/))
-- `zerossl_eab_kid` and `zerossl_eab_hmac_key` can be obtained for free with an account under zerossl.com.  To retrieve these values, log in to the relevant zerossl account for your zone and navigate to the [developer page](https://app.zerossl.com/developer).
+- `zerossl_eab_kid` and `zerossl_eab_hmac_key` can be obtained for free with an account under zerossl.com.  To retrieve these values, log in to the relevant zerossl account for your zone and navigate to the [developer page](https://app.zerossl.com/developer). **_Note: use a personal ZeroSSL account, and not a shared account - this avoids unintended consequences._**
 - `grafana` - `github_client_id`, `github_client_secret`: Register a [new OAuth App](https://github.com/settings/applications/new)
   - `Application name`: use something logical that you can find later
   - `Homepage URL`: format - https://grafana.<captain_domain>/login
@@ -145,7 +151,7 @@ terraform -chdir=admiral/hashicorp-vault/configuration apply -state=$(pwd)/terra
 
 
 ```yaml
-captain_domain: <yournamesgoeshere.glueops.rocks>
+captain_domain: <yournamesgoeshere>.glueops.rocks
 cloudflare_api_token: XXXXXXXXXXXXXXXXXXXXXXXXXX
 certManager:
   zerossl_eab_kid: XXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -159,14 +165,14 @@ grafana:
 argo-cd:
   server:
     ingress:
-      hosts: ["argocd.yournamesgoeshere.glueops.rocks"]
+      hosts: ["argocd.<yournamesgoeshere>.glueops.rocks"]
       tls: 
         - 
           hosts: 
-            - argocd.yournamesgoeshere.glueops.rocks
+            - argocd.<yournamesgoeshere>.glueops.rocks
           secretName: argocd-tls
     config:
-      url: "https://argocd.yournamesgoeshere.glueops.rocks"
+      url: "https://argocd.<yournamesgoeshere>.glueops.rocks"
       dex.config: |
         connectors:
           - type: github
