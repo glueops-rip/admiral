@@ -47,7 +47,7 @@ terraform -chdir=admiral/kubernetes-cluster/gcp apply -state=$(pwd)/terraform_st
 ```
 gcloud auth activate-service-account --key-file=creds.json
 export USE_GKE_GCLOUD_AUTH_PLUGIN=True
-gcloud container clusters get-credentials gke --region us-central1 --project <PROJECT_ID> #Should be in your captain_configuration.tfvars
+gcloud container clusters get-credentials gke --region us-central1-a --project <PROJECT_ID> #Should be in your captain_configuration.tfvars. Remove the `-a` if you are using regional
 ```
 
 ### Deploying K8s Apps
@@ -136,8 +136,8 @@ terraform -chdir=admiral/hashicorp-vault/configuration apply -state=$(pwd)/terra
 
 ## Making your captain.yaml
 
-- `captain_domain` -- The subdomain for the services on your cluster.  It will be used as the suffix url for argocd, grafana, vault, and any other services that come out of the box in the glueops platform.  _Note: Be sure this subdomain doesn't conflict with other subdomains already in use._
-- `cloudflare_api_token` should be a token with edit access to your zone. It will be used by `cert-manager` to create SSL certs via DNS verification through ZeroSSL and it will be used by `external-dns` to upsert DNS records in cloudflare so that your services can be exposed on the web via DNS. ([docs to create token](https://developers.cloudflare.com/fundamentals/api/get-started/create-token/))
+- `captain_domain` -- The Route53 subdomain for the services on your cluster.  It will be used as the suffix url for argocd, grafana, vault, and any other services that come out of the box in the glueops platform.  _Note: you need to create this before using this repo as this repo does not provision DNS Zones for you._
+- `aws_accessKey`,`aws_secretKey`,`aws_region` are your AWS credentials to update your `captain_domain` in route53. _Note: you should be using different credentials for cert-manager and for external-dns._
 - `zerossl_eab_kid` and `zerossl_eab_hmac_key` can be obtained for free with an account under zerossl.com.  To retrieve these values, log in to the relevant zerossl account for your zone and navigate to the [developer page](https://app.zerossl.com/developer). **_Note: use a personal ZeroSSL account, and not a shared account - this avoids unintended consequences._**
 - `grafana` - `github_client_id`, `github_client_secret`: Register a [new OAuth App](https://github.com/settings/applications/new)
   - `Application name`: use something logical that you can find later
@@ -152,10 +152,16 @@ terraform -chdir=admiral/hashicorp-vault/configuration apply -state=$(pwd)/terra
 
 ```yaml
 captain_domain: <yournamesgoeshere>.glueops.rocks
-cloudflare_api_token: XXXXXXXXXXXXXXXXXXXXXXXXXX
+externalDns:
+  aws_accessKey: XXXXXXXXXXXXXXXXXXXXXXXXXX
+  aws_secretKey: XXXXXXXXXXXXXXXXXXXXXXXXXX
+  aws_region: us-west-2
 certManager:
   zerossl_eab_kid: XXXXXXXXXXXXXXXXXXXXXXXXXX
   zerossl_eab_hmac_key: XXXXXXXXXXXXXXXXXXXXXXXXXX
+  aws_accessKey: XXXXXXXXXXXXXXXXXXXXXXXXXX
+  aws_secretKey: XXXXXXXXXXXXXXXXXXXXXXXXXX
+  aws_region: us-west-2
 gitHub:
   customer_github_org_and_team: "glueops-rocks:developers"
 grafana:
