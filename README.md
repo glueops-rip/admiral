@@ -138,6 +138,7 @@ terraform -chdir=admiral/hashicorp-vault/configuration apply -state=$(pwd)/terra
 
 - `captain_domain` -- The Route53 subdomain for the services on your cluster.  It will be used as the suffix url for argocd, grafana, vault, and any other services that come out of the box in the glueops platform.  _Note: you need to create this before using this repo as this repo does not provision DNS Zones for you._
 - `aws_accessKey`,`aws_secretKey`,`aws_region` are your AWS credentials to update your `captain_domain` in route53. _Note: you should be using different credentials for cert-manager and for external-dns._
+- - `aws_accessKey`,`aws_secretKey`,`aws_region` under the `glueops_backups.vault` are your AWS credentials to backup your hashicorp vault cluster. _Note: these are different and unique to just the vault backup cronjob Ex. you CANNOT use the cert-manager or external-dns credentials here._
 - `zerossl_eab_kid` and `zerossl_eab_hmac_key` can be obtained for free with an account under zerossl.com.  To retrieve these values, log in to the relevant zerossl account for your zone and navigate to the [developer page](https://app.zerossl.com/developer). **_Note: use a personal ZeroSSL account, and not a shared account - this avoids unintended consequences._**
 - `grafana` - `github_client_id`, `github_client_secret`: Register a [new OAuth App](https://github.com/settings/applications/new)
   - `Application name`: use something logical that you can find later
@@ -151,7 +152,14 @@ terraform -chdir=admiral/hashicorp-vault/configuration apply -state=$(pwd)/terra
 
 
 ```yaml
-captain_domain: <yournamesgoeshere>.glueops.rocks
+captain_domain: <cluster_env>.<yournamesgoeshere>.glueopshosted.rocks
+glueops_backups:
+  vault:
+    aws_region: us-west-2
+    aws_accessKey: XXXXXXXXXXXXXXXXXXXXXXXXXX
+    aws_secretKey: XXXXXXXXXXXXXXXXXXXXXXXXXX
+    cron_expression: "0 */6 * * *"
+    company_key: <yournamesgoeshere>
 externalDns:
   aws_accessKey: XXXXXXXXXXXXXXXXXXXXXXXXXX
   aws_secretKey: XXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -171,14 +179,14 @@ grafana:
 argo-cd:
   server:
     ingress:
-      hosts: ["argocd.<yournamesgoeshere>.glueops.rocks"]
+      hosts: ["argocd.<cluster_env>.<yournamesgoeshere>.glueopshosted.rocks"]
       tls: 
         - 
           hosts: 
-            - argocd.<yournamesgoeshere>.glueops.rocks
+            - argocd.<cluster_env>.<yournamesgoeshere>.glueopshosted.rocks
           secretName: argocd-tls
     config:
-      url: "https://argocd.<yournamesgoeshere>.glueops.rocks"
+      url: "https://argocd.<cluster_env>.<yournamesgoeshere>.glueopshosted.rocks"
       dex.config: |
         connectors:
           - type: github
