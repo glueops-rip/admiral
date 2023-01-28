@@ -142,13 +142,13 @@ terraform -chdir=admiral/hashicorp-vault/configuration apply -state=$(pwd)/terra
 - `zerossl_eab_kid` and `zerossl_eab_hmac_key` can be obtained for free with an account under zerossl.com.  To retrieve these values, log in to the relevant zerossl account for your zone and navigate to the [developer page](https://app.zerossl.com/developer). **_Note: use a personal ZeroSSL account, and not a shared account - this avoids unintended consequences._**
 - `grafana` - `github_client_id`, `github_client_secret`: Register a [new OAuth App](https://github.com/settings/applications/new)
   - `Application name`: use something logical that you can find later
-  - `Homepage URL`: format - https://grafana.<captain_domain>/login
-  - `Authorization callback URL`: format - https://grafana.<captain_domain>/login/github
+  - `Homepage URL`: format - `https://grafana.<cluster_environment>.<captain_domain>/login`
+  - `Authorization callback URL`: format - `https://grafana.<cluster_environment>.<captain_domain>/login/github`
   - Retrieve values needed in `captain.yaml` after the OAuth app is created.
 - `argo-cd` - similar to `grafana`, register a new OAuth app and retrieve the associated `github_client_id` and `github_client_secret`
   - `Application name`: use something logical that you can find later
-  - `Homepage URL`: format - https://argocd.<client_domain>
-  - `Authorization callback URL`: format - https://argocd.<captain_domain>/api/dex/callback
+  - `Homepage URL`: format - `https://argocd.<cluster_environment>.<captain_domain>`
+  - `Authorization callback URL`: format - `https://argocd.<cluster_environment>.<captain_domain>/api/dex/callback`
 
 
 ```yaml
