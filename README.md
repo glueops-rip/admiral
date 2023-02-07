@@ -140,7 +140,8 @@ terraform -chdir=admiral/hashicorp-vault/configuration apply -state=$(pwd)/terra
 - `aws_accessKey`,`aws_secretKey`,`aws_region` are your AWS credentials to update your `captain_domain` in route53. _Note: you should be using different credentials for cert-manager and for external-dns._
 - - `aws_accessKey`,`aws_secretKey`,`aws_region` under the `glueops_backups.vault` are your AWS credentials to backup your hashicorp vault cluster. _Note: these are different and unique to just the vault backup cronjob Ex. you CANNOT use the cert-manager or external-dns credentials here._
 - `zerossl_eab_kid` and `zerossl_eab_hmac_key` can be obtained for free with an account under zerossl.com.  To retrieve these values, log in to the relevant zerossl account for your zone and navigate to the [developer page](https://app.zerossl.com/developer). **_Note: use a personal ZeroSSL account, and not a shared account - this avoids unintended consequences._**
-- `tenant_b64enc_ssh_private_key` : create a private key to access the application stack repository it and format using `cat <key-file> | base64 | tr -d '\n'`
+- `gitHub.tenant_b64enc_ssh_private_key` : create a private key to access the application stack repository it and format using `cat <key-file> | base64 | tr -d '\n'`
+- `gitHub.api_token`: create a Personal Access Token in github that has repo scope access. It would be best to use a service account for this otherwise all the comments on PR will be left in your name
 - `grafana` - `github_client_id`, `github_client_secret`: Register a [new OAuth App](https://github.com/settings/applications/new)
   - `Application name`: use something logical that you can find later
   - `Homepage URL`: format - `https://grafana.<captain_domain>/login`
@@ -172,6 +173,7 @@ certManager:
   aws_secretKey: XXXXXXXXXXXXXXXXXXXXXXXXXX
   aws_region: us-west-2
 gitHub:
+  api_token: XXXXXXXXXXXXXXXXXXXXXXXXXX
   customer_github_org_and_team: "glueops-rocks:developers"
   tenant_application_stack_repo: "git@github.com:<your-org-name>/<your-repo-name>.git"
   tenant_b64enc_ssh_private_key: XXXXXXXXXXXXXXXXXXXXXXXXXX
