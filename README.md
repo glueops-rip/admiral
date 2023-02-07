@@ -142,12 +142,12 @@ terraform -chdir=admiral/hashicorp-vault/configuration apply -state=$(pwd)/terra
 - `zerossl_eab_kid` and `zerossl_eab_hmac_key` can be obtained for free with an account under zerossl.com.  To retrieve these values, log in to the relevant zerossl account for your zone and navigate to the [developer page](https://app.zerossl.com/developer). **_Note: use a personal ZeroSSL account, and not a shared account - this avoids unintended consequences._**
 - `gitHub.tenant_b64enc_ssh_private_key` : create a private key to access the application stack repository it and format using `cat <key-file> | base64 | tr -d '\n'`
 - `gitHub.api_token`: create a Personal Access Token in github that has repo scope access. It would be best to use a service account for this otherwise all the comments on PR will be left in your name
-- `grafana` - `github_client_id`, `github_client_secret`: Register a [new OAuth App](https://github.com/settings/applications/new)
+- `grafana` - `github_client_id`, `github_client_secret`: Register a [new OAuth App](https://github.com/settings/applications/new) </br> _**Note: Create the `OAuth App` at the Organization level, not for your individual user**_
   - `Application name`: use something logical that you can find later
   - `Homepage URL`: format - `https://grafana.<captain_domain>/login`
   - `Authorization callback URL`: format - `https://grafana.<captain_domain>/login/github`
   - Retrieve values needed in `captain.yaml` after the OAuth app is created.
-- `argo-cd` - similar to `grafana`, register a new OAuth app and retrieve the associated `github_client_id` and `github_client_secret`
+- `argo-cd` - similar to `grafana` and also at the Organization level, register a new OAuth app and retrieve the associated `github_client_id` and `github_client_secret`
   - `Application name`: use something logical that you can find later
   - `Homepage URL`: format - `https://argocd.<captain_domain>`
   - `Authorization callback URL`: format - `https://argocd.<captain_domain>/api/dex/callback`
