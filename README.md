@@ -154,6 +154,7 @@ terraform -chdir=admiral/hashicorp-vault/configuration apply -state=$(pwd)/terra
 
 
 ```yaml
+development_mode_enabled: false
 captain_domain: <cluster_env>.<yournamesgoeshere>.glueopshosted.rocks
 glueops_backups:
   vault:
@@ -185,11 +186,6 @@ argo-cd:
   server:
     ingress:
       hosts: ["argocd.<cluster_env>.<yournamesgoeshere>.glueopshosted.rocks"]
-      tls: 
-        - 
-          hosts: 
-            - argocd.<cluster_env>.<yournamesgoeshere>.glueopshosted.rocks
-          secretName: argocd-tls
     config:
       url: "https://argocd.<cluster_env>.<yournamesgoeshere>.glueopshosted.rocks"
       dex.config: |
