@@ -82,9 +82,10 @@ helm template captain -f captain.yaml --dependency-update --namespace=glueops-co
 See docs in: <https://github.com/GlueOps/terraform-module-kubernetes-hashicorp-vault-initialization>
 
 From the root directory of your repository, initialize vault using the following commands
+
 ```bash
 terraform -chdir=admiral/hashicorp-vault/init init
-terraform -chdir=admiral/hashicorp-vault/init apply -state=$(pwd)/terraform_states/vault-init.terraform.tfstate
+export VAULT_SKIP_VERIFY=true && terraform -chdir=admiral/hashicorp-vault/init apply -state=$(pwd)/terraform_states/vault-init.terraform.tfstate
 ```
 
 #### Configure Vault
@@ -93,7 +94,7 @@ See docs in: https://github.com/GlueOps/terraform-module-kubernetes-hashicorp-va
 
 ```bash
 terraform -chdir=admiral/hashicorp-vault/configuration init
-terraform -chdir=admiral/hashicorp-vault/configuration apply -state=$(pwd)/terraform_states/vault-configuration.terraform.tfstate -var-file=$(pwd)/captain_configuration.tfvars
+export VAULT_SKIP_VERIFY=true && terraform -chdir=admiral/hashicorp-vault/configuration apply -state=$(pwd)/terraform_states/vault-configuration.terraform.tfstate -var-file=$(pwd)/captain_configuration.tfvars
 ```
 
 ## Cheat Sheet
