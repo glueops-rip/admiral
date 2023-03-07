@@ -186,7 +186,9 @@ gitHub:
 grafana:
   github_client_id: XXXXXXXXXXXXXXXXXXXXXXXXXX
   github_client_secret: XXXXXXXXXXXXXXXXXXXXXXXXXX
-  github_org_names: GlueOps glueops-rocks
+  github_admin_org_name: GlueOps
+  github_admin_team_name: grafana_super_admins
+  github_other_org_names: glueops-rocks
 loki:
   bucket: XXXXXXXXXXXXXXXXXXXXXXXXXX
   aws_region: us-west-2
