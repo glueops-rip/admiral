@@ -141,9 +141,9 @@ export VAULT_SKIP_VERIFY=true && terraform -chdir=admiral/hashicorp-vault/config
   - **Grafana** - `grafana.{captain_domain from captain.yaml}`
 - Accessing Services
   - GitHub OAuth - to confirm OAuth access was configured correctly
-    - **ArgoCD** - Click "log in via github" and select the relevant organization, which was configured in the `captain.yaml` at `gitHub.customer_github_org_and_team:`
+    - **ArgoCD** - Click `LOGIN VIA GITHUB SSO` and grant access to the relevant organization(s), which were configured in the `platform.yaml` at `dex.github.orgs`
     - **Vault**  - [Create a GitHub Personal Access Token](https://github.com/settings/tokens) with permission to `read:org`.  Paste the token into the Vault UI.
-    - **Grafana** - Click "Sign in with GitHub" and select the relevant organization, which was configured in the `captain.yaml` at `gitHub.customer_github_org_and_team:`
+    - **Grafana** - Click `Signin with GitHub SSO` and grant access to the relevant organization(s), which were configured in the `platform.yaml` at `dex.github.orgs`
   - Admin
     - **ArgoCD** - username: `admin`, retrieve the password using:
       
