@@ -69,6 +69,7 @@ cp ./admiral/argocd.yaml.tpl argocd.yaml
 - Install ArgoCD
 
 ```bash
+kubectl apply -k "https://github.com/argoproj/argo-cd/manifests/crds?ref=v2.6.6" 
 helm repo add argo https://argoproj.github.io/argo-helm
 helm install argocd argo/argo-cd --skip-crds --version 5.27.1 -f argocd.yaml --namespace=glueops-core --create-namespace
 ```
