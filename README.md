@@ -89,7 +89,7 @@ kubectl get pods -n glueops-core
 #### Deploying the GlueOps Platform
 
 - Prepare a `platform.yaml` to use for the GlueOps Platform installation. 
-  - Please reference the `values.yaml` from the [platform chart](https://github.com/GlueOps/platform-helm-chart-platform/tree/v0.1.1)
+  - Please reference the `values.yaml` from the [platform chart](https://github.com/GlueOps/platform-helm-chart-platform/tree/v0.2.2)
   - We recommend copying the `values.yaml` and saving it as your `platform.yaml` and then updating values as needed. There are inline comments next to each value.
   - Quick Notes:
     - Replace `<tenant-name-goes-here>` with your tenant/company key. Example: `antoniostacos`
@@ -98,7 +98,7 @@ kubectl get pods -n glueops-core
 
 ```bash
 helm repo add glueops-platform https://helm.gpkg.io/platform
-helm install glueops-platform glueops-platform/glueops-platform --version 0.1.1 -f platform.yaml --namespace=glueops-core
+helm install glueops-platform glueops-platform/glueops-platform --version 0.2.2 -f platform.yaml --namespace=glueops-core
 ```
 
 - Check on ArgoCD application status with
