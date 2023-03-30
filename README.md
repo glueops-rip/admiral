@@ -89,7 +89,9 @@ kubectl get pods -n glueops-core
 #### Deploying the GlueOps Platform
 
 - Prepare a `platform.yaml` to use for the GlueOps Platform installation. 
-  - Please reference the `values.yaml` from the platform repository: https://github.com/GlueOps/platform. It would be best to go to the `tags` and click on the `tag` that matches the helm chart version you are deploying. 
+  - Please reference the `values.yaml` from the platform repository: https://github.com/GlueOps/platform. 
+    - It would be best to go to the `tags` and click on the `tag` that matches the glueops-platform helm chart version. 
+      - Viewing the `values.yaml` from within a particular `tag` will ensure you have the correct file
   - We recommend copying the `values.yaml` and saving it as your `platform.yaml` and then updating values as needed. There are inline comments next to each value.
   - Quick Notes:
     - Replace `<tenant-name-goes-here>` with your tenant/company key. Example: `antoniostacos`
