@@ -66,8 +66,8 @@ cp ./admiral/argocd.yaml.tpl argocd.yaml
 
 - Read the comments in the file and update the values in the argocd.yaml file.
   - Quick Notes:
-    - Replace <tenant-name-goes-here> with your tenant/company key. Example: `antoniostacos`
-    - Replace <cluster_env> with your cluster_environment name. Example: `nonprod`
+    - Replace `<tenant-name-goes-here>` with your tenant/company key. Example: `antoniostacos`
+    - Replace `<cluster_env>` with your cluster_environment name. Example: `nonprod`
     - The `clientSecret` that you specify needs to be the same one you use in the `platform.yaml` for ArgoCD. If they do not match you will not be able to login.
 
 - Install ArgoCD
@@ -92,8 +92,8 @@ kubectl get pods -n glueops-core
   - Please reference the `values.yaml` from the platform repository: https://github.com/GlueOps/platform. It would be best to go to the `tags` and click on the `tag` that matches the helm chart version you are deploying. 
   - We recommend copying the `values.yaml` and saving it as your `platform.yaml` and then updating values as needed. There are inline comments next to each value.
   - Quick Notes:
-    - Replace <tenant-name-goes-here> with your tenant/company key. Example: `antoniostacos`
-    - Replace <cluster_env> with your cluster_environment name. Example: `nonprod`
+    - Replace `<tenant-name-goes-here>` with your tenant/company key. Example: `antoniostacos`
+    - Replace `<cluster_env> with your` cluster_environment name. Example: `nonprod`
     - As mentioned above, the ArgoCD's `clientSecret` needs to match the ArgoCD `client_secret` you define within this `platform.yaml`.
 
 ```bash
