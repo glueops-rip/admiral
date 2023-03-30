@@ -55,25 +55,46 @@ gcloud container clusters get-credentials gke --region us-central1-a --project <
 #### Prerequisites
 
 - Connection to the Kubernetes server. The authentication methods will vary by Cloud Provider and are documented above
-- A proper `captain.yaml` (see below)
+
+#### Deploying ArgoCD
+
+- Prepare a argocd.yaml to use for your argocd installation
+  
+```bash
+cp ./admiral/argocd.yaml.tpl argocd.yaml
+```
+
+- Read the comments in the file and update the values in the argocd.yaml file.
+
+- Install ArgoCD
+
+```bash
+helm repo add argo https://argoproj.github.io/argo-helm
+helm install argocd argo/argo-cd --skip-crds --version 5.27.1 -f argocd.yaml --namespace=glueops-core --create-namespace
+```
+
+- Check to see if all ArgoCD pods are in a good state with: 
+
+```bash
+kubectl get pods -n glueops-core
+```
 
 #### Deploying the GlueOps Platform
 
-```bash
-kubectl create ns glueops-core
-helm template captain -f captain.yaml --dependency-update --namespace=glueops-core ./admiral/glueops-platform | kubectl -n glueops-core apply -f -
-helm template captain -f captain.yaml --dependency-update --namespace=glueops-core ./admiral/glueops-platform | kubectl -n glueops-core apply -f -
-```
-
-To check items pending apply, use:
+- Prepare a `platform.yaml` to use for the GlueOps Platform installation. Please reference the `values.yaml` from the platform repository: https://github.com/GlueOps/platform. We recommend copying the `values.yaml` and saving it as your `platform.yaml` and then filling in the blanks and/or updating values as needed. There are inline comments next to each value. **Be sure to grab the values.yaml from the version you are deploying. The helm chart version is the name of the tag.**
 
 ```bash
-helm template captain -f captain.yaml --dependency-update --namespace=glueops-core ./admiral/glueops-platform | kubectl -n glueops-core diff -f -
+helm repo add glueops-platform https://helm.gpkg.io/platform
+helm install glueops-platform/glueops-platform --version 0.1.0 -f platform.yaml --namespace=glueops-core
 ```
 
-**_Notes:_**<br>
-**_- It can take up to 10 minutes for the services on kubernetes to come up.  Login to ArgoCD with `admin` credentials to monitor the status of the deployment. See `Cheat Sheet` below for details about logging in if you need them._**<br>
-**_- You run the command twice because the CRD's get installed on the very first deployment._**
+- Check on ArgoCD application status with
+
+```bash
+kubectl get applications -n glueops-core
+```
+
+**_Notes:_ It can take up to 10 minutes for the services on kubernetes to come up and for DNS to work..**
 
 ### Vault Setup
 
@@ -99,15 +120,8 @@ export VAULT_SKIP_VERIFY=true && terraform -chdir=admiral/hashicorp-vault/config
 
 ## Cheat Sheet
 
-### Tips
-
-- To do much of anything, you probably need to authenticate with the K8s cluster. See the Cloud specific Authentication details **_above_**.
-- Whenever running terraform against vault you need a connection to vault: `kubectl -n glueops-core-vault port-forward svc/vault-ui 8200:8200`
-  - Don't forget to add the SSL cert to your CA Store by running: `export SSL_CERT_FILE=$(pwd)/ca.crt`
-- When making IaC updates to the Kubernetes cluster itself (ex., new node pools or updating cluster version, VPC peering, etc.) you must authenticate to that cloud provider and those instructions will be in the terraform module that you used to deploy the cluster in the `##### Deployment` section
-- Remember all commands in this document assume you are "above" the admiral folder.
-
 ### Using the Cluster
+
 - Service Locations
   - **ArgoCD** - `argocd.{captain_domain from captain.yaml}`
   - **Vault** - `vault.{captain_domain from captain.yaml}`
@@ -134,7 +148,9 @@ export VAULT_SKIP_VERIFY=true && terraform -chdir=admiral/hashicorp-vault/config
       kubectl -n glueops-core-kube-prometheus-stack get secret kube-prometheus-stack-grafana -o jsonpath="{.data.admin-password}" | base64 -d
       ```
 
+### Tips
 
-## Making your captain.yaml
-
-Please reference the `values.yaml` from the platform repository: https://github.com/GlueOps/platform. We recommend copying the values.yaml and saving it as your `captain.yaml` and then filling in the blanks and/or updating values as needed.
+- To do much of anything, you probably need to authenticate with the K8s cluster. See the Cloud specific Authentication details **_above_**.
+- Whenever running terraform against vault you need a connection to vault: `kubectl -n glueops-core-vault port-forward svc/vault-ui 8200:8200`
+- When making IaC updates to the Kubernetes cluster itself (ex., new node pools or updating cluster version, VPC peering, etc.) you must authenticate to that cloud provider and those instructions will be in the terraform module that you used to deploy the cluster in the `##### Deployment` section
+- Remember all commands in this document assume you are "above" the admiral folder.
