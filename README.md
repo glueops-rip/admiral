@@ -89,9 +89,7 @@ kubectl get pods -n glueops-core
 #### Deploying the GlueOps Platform
 
 - Prepare a `platform.yaml` to use for the GlueOps Platform installation. 
-  - Please reference the `values.yaml` from the platform repository: https://github.com/GlueOps/platform. 
-    - It would be best to go to the `tags` and click on the `tag` that matches the glueops-platform helm chart version. 
-      - Viewing the `values.yaml` from within a particular `tag` will ensure you have the correct file
+  - Please reference the `values.yaml` from the [platform chart](https://github.com/GlueOps/platform-helm-chart-platform/tree/v0.1.1)
   - We recommend copying the `values.yaml` and saving it as your `platform.yaml` and then updating values as needed. There are inline comments next to each value.
   - Quick Notes:
     - Replace `<tenant-name-goes-here>` with your tenant/company key. Example: `antoniostacos`
@@ -100,7 +98,7 @@ kubectl get pods -n glueops-core
 
 ```bash
 helm repo add glueops-platform https://helm.gpkg.io/platform
-helm install glueops-platform glueops-platform/glueops-platform --version 0.1.0 -f platform.yaml --namespace=glueops-core
+helm install glueops-platform glueops-platform/glueops-platform --version 0.1.1 -f platform.yaml --namespace=glueops-core
 ```
 
 - Check on ArgoCD application status with
@@ -115,7 +113,7 @@ kubectl get applications -n glueops-core
 
 #### Intialize Vault
 
-See docs in: <https://github.com/GlueOps/terraform-module-kubernetes-hashicorp-vault-initialization>
+See docs in [here](https://github.com/GlueOps/terraform-module-kubernetes-hashicorp-vault-initialization)
 
 From the root directory of your repository, initialize vault using the following commands
 
@@ -126,7 +124,7 @@ export VAULT_SKIP_VERIFY=true && terraform -chdir=admiral/hashicorp-vault/init a
 
 #### Configure Vault
 
-See docs in: https://github.com/GlueOps/terraform-module-kubernetes-hashicorp-vault-configuration
+See docs [here](https://github.com/GlueOps/terraform-module-kubernetes-hashicorp-vault-configuration)
 
 ```bash
 terraform -chdir=admiral/hashicorp-vault/configuration init
