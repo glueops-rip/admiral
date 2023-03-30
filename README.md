@@ -18,7 +18,7 @@ Since the admiral repo is intended to be thought of as a software package, usage
 
 #### Deployment
 
-See docs in: https://github.com/GlueOps/terraform-module-cloud-aws-kubernetes-cluster
+See docs for [AWS](https://github.com/GlueOps/terraform-module-cloud-aws-kubernetes-cluster)
 
 ```bash
 terraform -chdir=admiral/kubernetes-cluster/aws init
@@ -35,7 +35,7 @@ aws eks update-kubeconfig --region us-west-2 --name captain-cluster
 
 ##### Deployment
 
-See docs in: <https://github.com/GlueOps/terraform-module-cloud-gcp-kubernetes-cluster>
+See docs for [GCP](https://github.com/GlueOps/terraform-module-cloud-gcp-kubernetes-cluster)
 
 ```bash
 terraform -chdir=admiral/kubernetes-cluster/gcp init
@@ -113,7 +113,7 @@ kubectl get applications -n glueops-core
 
 #### Intialize Vault
 
-See docs in [here](https://github.com/GlueOps/terraform-module-kubernetes-hashicorp-vault-initialization)
+See docs for [Intializing Vault](https://github.com/GlueOps/terraform-module-kubernetes-hashicorp-vault-initialization)
 
 From the root directory of your repository, initialize vault using the following commands
 
@@ -124,7 +124,7 @@ export VAULT_SKIP_VERIFY=true && terraform -chdir=admiral/hashicorp-vault/init a
 
 #### Configure Vault
 
-See docs [here](https://github.com/GlueOps/terraform-module-kubernetes-hashicorp-vault-configuration)
+See docs for [Configuring Vault](https://github.com/GlueOps/terraform-module-kubernetes-hashicorp-vault-configuration)
 
 ```bash
 terraform -chdir=admiral/hashicorp-vault/configuration init
