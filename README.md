@@ -68,7 +68,7 @@ cp ./admiral/argocd.yaml.tpl argocd.yaml
   - Quick Notes:
     - Replace `<tenant-name-goes-here>` with your tenant/company key. Example: `antoniostacos`
     - Replace `<cluster_env>` with your cluster_environment name. Example: `nonprod`
-    - The `clientSecret` that you specify needs to be the same one you use in the `platform.yaml` for ArgoCD. If they do not match you will not be able to login.
+    - The `clientSecret` that you specify needs to be the same one you use in the `platform.yaml` for ArgoCD, at `dex.argocd.client_secret`. If they do not match you will not be able to login.
 
 - Install ArgoCD
 
