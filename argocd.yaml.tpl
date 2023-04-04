@@ -86,7 +86,11 @@ server:
     hosts: ["argocd.<cluster_env>.<tenant-name-goes-here>.onglueops.rocks"]
     # @ignored
     enabled: true
+    # this public-authenticated leverages the authentication proxy (pomerium)
+    # @ignored
+    ingressClassName: public-authenticated
+    # standard annotations for pomerium: https://www.pomerium.com/docs/deploying/k8s/ingress
     # @ignored
     annotations:
-      # this is the internal-nginx ingress class name. Check the application-internal-nginx.yaml under the templates directory in the glueops-platform helm chart for more details. ref: https://github.com/glueops/platform
-      kubernetes.io/ingress.class: "internal-ingress-nginx"
+      ingress.pomerium.io/allow_any_authenticated_user: 'true'
+      ingress.pomerium.io/pass_identity_headers: 'true'
