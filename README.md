@@ -98,7 +98,7 @@ kubectl get pods -n glueops-core
 
 ```bash
 helm repo add glueops-platform https://helm.gpkg.io/platform
-helm install glueops-platform glueops-platform/glueops-platform --version 0.3.0 -f platform.yaml --namespace=glueops-core
+helm install glueops-platform glueops-platform/glueops-platform --version 0.4.0 -f platform.yaml --namespace=glueops-core
 ```
 
 - Check on ArgoCD application status with
