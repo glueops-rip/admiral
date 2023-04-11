@@ -30,7 +30,8 @@ Once you complete steps 1-5 you will have a captain that you can deploy your app
 - Prepare a argocd.yaml to use for your argocd installation
   
 ```bash
-cp ./admiral/argocd.yaml.tpl argocd.yaml
+wget https://raw.githubusercontent.com/GlueOps/admiral/main/argocd.yaml.tpl
+mv argocd.yaml.tpl argocd.yaml
 ```
 
 - Read the comments in the file and update the values in the argocd.yaml file.
