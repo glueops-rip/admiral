@@ -2,7 +2,7 @@
 
 ## Overview
 
-This admiral repo lets you orchestrate the deployment and management of a captain cluster with all the services. When running the `terraform`,`helm`, and other CLI commands mentioned in this `README.md`, please assume you are a level above **this** folder. For example, the `-chdir` flag means running the terraform within a particular folder, and the `-state` lets you save it somewhere else. The ideal way to look at this `admiral` repository is that it is a software package. Right now, it's a series of git repositories CLI commands, but we plan to automate this further to where we have a single API call to do all this automation for you.
+
 
 ### Getting Started
 
@@ -14,27 +14,9 @@ Since the admiral repo is intended to be thought of as a software package, usage
 
 **IMPORTANT: You can only use 1 Cloud Provider**
 
-| Cloud Provider                                                                                    |
+| Cloud Providers                                                                                   |
 |---------------------------------------------------------------------------------------------------|
 | [Google Cloud Platform](https://github.com/GlueOps/terraform-module-cloud-gcp-kubernetes-cluster) |
-
-#### Amazon Web Services (AWS)
-
-#### Deployment
-
-See docs for [AWS](https://github.com/GlueOps/terraform-module-cloud-aws-kubernetes-cluster)
-
-```bash
-terraform -chdir=admiral/kubernetes-cluster/aws init
-terraform -chdir=admiral/kubernetes-cluster/aws apply -state=$(pwd)/terraform_states/kubernetes-cluster.terraform.tfstate -var-file=$(pwd)/captain_configuration.tfvars
-```
-
-##### Authentication for maintenance/post-deployment tasks
-
-```bash
-aws eks update-kubeconfig --region us-west-2 --name captain-cluster
-```
-
 
 
 
