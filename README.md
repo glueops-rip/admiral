@@ -101,23 +101,11 @@ kubectl get applications -n glueops-core
 
 #### Intialize Vault
 
-See docs for [Intializing Vault](https://github.com/GlueOps/terraform-module-kubernetes-hashicorp-vault-initialization)
-
-From the root directory of your repository, initialize vault using the following commands
-
-```bash
-terraform -chdir=admiral/hashicorp-vault/init init
-export VAULT_SKIP_VERIFY=true && terraform -chdir=admiral/hashicorp-vault/init apply -state=$(pwd)/terraform_states/vault-init.terraform.tfstate
-```
+https://github.com/GlueOps/terraform-module-kubernetes-hashicorp-vault-initialization
 
 #### Configure Vault
 
-See docs for [Configuring Vault](https://github.com/GlueOps/terraform-module-kubernetes-hashicorp-vault-configuration)
-
-```bash
-terraform -chdir=admiral/hashicorp-vault/configuration init
-export VAULT_SKIP_VERIFY=true && terraform -chdir=admiral/hashicorp-vault/configuration apply -state=$(pwd)/terraform_states/vault-configuration.terraform.tfstate -var-file=$(pwd)/captain_configuration.tfvars
-```
+https://github.com/GlueOps/terraform-module-kubernetes-hashicorp-vault-configuration
 
 ## Cheat Sheet
 
