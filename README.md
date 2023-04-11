@@ -2,13 +2,15 @@
 
 ## Overview
 
+This Admiral repository will guide you on creating a captain (kubernetes cluster). You will need to follow these steps in this order:
 
+1) Create the kubernetes infra for the desired clouder provider
+2) Deploy ArgoCD onto the kubernetes cluster
+3) Deploying the GlueOps-Platform onto the kubernetes cluster
+4) Intialize/Unseal Vault
+5) Configure Vault
 
-### Getting Started
-
-Since the admiral repo is intended to be thought of as a software package, usage involves downloading this repository and following the below installation instructions.
-
-[GlueOps Team](https://github.com/internal-GlueOps/team/wiki/Admiral-Repository-Usage-for-GlueOps-Team-Members)
+Once you complete steps 1-5 you will have a captain that you can deploy your apps onto.
 
 ### Deploying your cluster
 
@@ -19,14 +21,11 @@ Since the admiral repo is intended to be thought of as a software package, usage
 | [Google Cloud Platform](https://github.com/GlueOps/terraform-module-cloud-gcp-kubernetes-cluster) |
 
 
-
-### Deploying K8s Apps
-
-#### Prerequisites
-
-- Connection to the Kubernetes server. The authentication methods will vary by Cloud Provider and are documented above
-
 #### Deploying ArgoCD
+
+##### Prerequisites
+
+- Connection to the Kubernetes server. The authentication methods will vary by Cloud Provider and are documented within their respective wikis.
 
 - Prepare a argocd.yaml to use for your argocd installation
   
@@ -57,6 +56,11 @@ kubectl get pods -n glueops-core
 - Using the command above, ensure that the ArgoCD pods are stable and no additional pods/containers are coming online. If there is a pod that is 1/3 wait until it's 3/3 and has been running for at least a minute. This entire bootstrap can take about 5mins as we are deploying a number of services in HA mode.
 
 #### Deploying the GlueOps Platform
+
+##### Prerequisites
+
+- Connection to the Kubernetes server. The authentication methods will vary by Cloud Provider and are documented within their respective wikis.
+
 
 - Prepare a `platform.yaml` to use for the GlueOps Platform installation. 
   - Please reference the `values.yaml` from the [platform chart](https://github.com/GlueOps/platform-helm-chart-platform/tree/v0.2.2)
