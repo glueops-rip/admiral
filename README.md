@@ -14,6 +14,10 @@ Since the admiral repo is intended to be thought of as a software package, usage
 
 **IMPORTANT: You can only use 1 Cloud Provider**
 
+| Cloud Provider                                                                                    |
+|---------------------------------------------------------------------------------------------------|
+| [Google Cloud Platform](https://github.com/GlueOps/terraform-module-cloud-gcp-kubernetes-cluster) |
+
 #### Amazon Web Services (AWS)
 
 #### Deployment
@@ -31,24 +35,8 @@ terraform -chdir=admiral/kubernetes-cluster/aws apply -state=$(pwd)/terraform_st
 aws eks update-kubeconfig --region us-west-2 --name captain-cluster
 ```
 
-#### Google Cloud Platform (GCP)
 
-##### Deployment
 
-See docs for [GCP](https://github.com/GlueOps/terraform-module-cloud-gcp-kubernetes-cluster)
-
-```bash
-terraform -chdir=admiral/kubernetes-cluster/gcp init
-terraform -chdir=admiral/kubernetes-cluster/gcp apply -state=$(pwd)/terraform_states/kubernetes-cluster.terraform.tfstate -var-file=$(pwd)/captain_configuration.tfvars
-```
-
-##### Authentication for maintenance/post-deployment tasks
-
-```
-gcloud auth activate-service-account --key-file=creds.json
-export USE_GKE_GCLOUD_AUTH_PLUGIN=True
-gcloud container clusters get-credentials gke --region us-central1-a --project <PROJECT_ID> #Should be in your captain_configuration.tfvars. Remove the `-a` if you are using regional
-```
 
 ### Deploying K8s Apps
 
