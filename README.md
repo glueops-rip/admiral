@@ -44,13 +44,13 @@ https://github.com/GlueOps/terraform-module-kubernetes-hashicorp-vault-configura
 ### Using the Cluster
 
 - Service Locations
-  - **ArgoCD** - `argocd.{captain_domain from captain.yaml}`
-  - **Vault** - `vault.{captain_domain from captain.yaml}`
-  - **Grafana** - `grafana.{captain_domain from captain.yaml}`
+  - **ArgoCD** - `argocd.<captain_domain>`
+  - **Vault** - `vault.<captain_domain>`
+  - **Grafana** - `grafana.<captain_domain>`
 - Accessing Services
   - GitHub OAuth - to confirm OAuth access was configured correctly
     - **ArgoCD** - Click `LOGIN VIA GITHUB SSO` and grant access to the relevant organization(s), which were configured in the `platform.yaml` at `dex.github.orgs`
-    - **Vault**  - [Create a GitHub Personal Access Token](https://github.com/settings/tokens) with permission to `read:org`.  Paste the token into the Vault UI.
+    - **Vault**  - Click on `oidc` and then type in `reader` or `editor` depending on what role you want to use
     - **Grafana** - Click `Signin with GitHub SSO` and grant access to the relevant organization(s), which were configured in the `platform.yaml` at `dex.github.orgs`
   - Admin
     - **ArgoCD** - username: `admin`, retrieve the password using:
@@ -58,10 +58,6 @@ https://github.com/GlueOps/terraform-module-kubernetes-hashicorp-vault-configura
       ```bash
       kubectl -n glueops-core get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
       ```
-    - **Vault**
-      - Retrieve the `root_token` from the tfstatefile of the Vault init TF apply (`$(pwd)/terraform_states/vault-init.terraform.tfstate`)
-      - Select `Other` on the login page and use `Token` as the `Method`
-      - Paste the `root_token` value as the `Token`
 
     - **Grafana** - username: `admin`, retrieve the password using:
       
