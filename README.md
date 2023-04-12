@@ -21,37 +21,13 @@ Once you complete steps 1-5 you will have a captain that you can deploy your app
 | [Google Cloud Platform](https://github.com/GlueOps/terraform-module-cloud-gcp-kubernetes-cluster) |
 
 
-#### Deploying ArgoCD
+### Deploying ArgoCD
 
 https://github.com/GlueOps/argocd-install-docs/
 
-#### Deploying the GlueOps Platform
+### Deploying the GlueOps Platform
 
-##### Prerequisites
-
-- Connection to the Kubernetes server. The authentication methods will vary by Cloud Provider and are documented within their respective wikis.
-
-
-- Prepare a `platform.yaml` to use for the GlueOps Platform installation. 
-  - Please reference the `values.yaml` from the [platform chart](https://github.com/GlueOps/platform-helm-chart-platform/tree/v0.2.2)
-  - We recommend copying the `values.yaml` and saving it as your `platform.yaml` and then updating values as needed. There are inline comments next to each value.
-  - Quick Notes:
-    - Replace `<tenant-name-goes-here>` with your tenant/company key. Example: `antoniostacos`
-    - Replace `<cluster_env> with your` cluster_environment name. Example: `nonprod`
-    - As mentioned above, the ArgoCD's `clientSecret` needs to match the ArgoCD `client_secret` you define within this `platform.yaml`.
-
-```bash
-helm repo add glueops-platform https://helm.gpkg.io/platform
-helm install glueops-platform glueops-platform/glueops-platform --version 0.5.0 -f platform.yaml --namespace=glueops-core
-```
-
-- Check on ArgoCD application status with
-
-```bash
-kubectl get applications -n glueops-core
-```
-
-**_Notes:_ It can take up to 10 minutes for the services on kubernetes to come up and for DNS to work..**
+https://github.com/GlueOps/docs-glueops-platform/
 
 ### Vault Setup
 
