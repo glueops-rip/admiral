@@ -52,18 +52,6 @@ https://github.com/GlueOps/terraform-module-kubernetes-hashicorp-vault-configura
     - **ArgoCD** - Click `LOGIN VIA GITHUB SSO` and grant access to the relevant organization(s), which were configured in the `platform.yaml` at `dex.github.orgs`
     - **Vault**  - Click on `oidc` and then type in `reader` or `editor` depending on what role you want to use
     - **Grafana** - Click `Signin with GitHub SSO` and grant access to the relevant organization(s), which were configured in the `platform.yaml` at `dex.github.orgs`
-  - Admin
-    - **ArgoCD** - username: `admin`, retrieve the password using:
-      
-      ```bash
-      kubectl -n glueops-core get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
-      ```
-
-    - **Grafana** - username: `admin`, retrieve the password using:
-      
-      ```bash
-      kubectl -n glueops-core-kube-prometheus-stack get secret kube-prometheus-stack-grafana -o jsonpath="{.data.admin-password}" | base64 -d
-      ```
 
 ### Tips
 
