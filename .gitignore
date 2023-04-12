@@ -1,5 +1,0 @@
-.terraform.lock.hcl
-.terraform/
-vault_access.json
-ca.crt
-terraform.tfstate.backup
