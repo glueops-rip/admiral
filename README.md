@@ -53,9 +53,3 @@ https://github.com/GlueOps/terraform-module-kubernetes-hashicorp-vault-configura
     - **Vault**  - Click on `oidc` and then type in `reader` or `editor` depending on what role you want to use
     - **Grafana** - Click `Signin with GitHub SSO` and grant access to the relevant organization(s), which were configured in the `platform.yaml` at `dex.github.orgs`
 
-### Tips
-
-- To do much of anything, you probably need to authenticate with the K8s cluster. See the Cloud specific Authentication details **_above_**.
-- Whenever running terraform against vault you need a connection to vault: `kubectl -n glueops-core-vault port-forward svc/vault-ui 8200:8200`
-- When making IaC updates to the Kubernetes cluster itself (ex., new node pools or updating cluster version, VPC peering, etc.) you must authenticate to that cloud provider and those instructions will be in the terraform module that you used to deploy the cluster in the `##### Deployment` section
-- Remember all commands in this document assume you are "above" the admiral folder.
