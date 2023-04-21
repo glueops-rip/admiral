@@ -19,7 +19,7 @@ Once you complete steps 1-5 you will have a captain that you can deploy your app
 | Cloud Providers                                                                                   |
 |---------------------------------------------------------------------------------------------------|
 | [Google Cloud Platform](https://github.com/GlueOps/terraform-module-cloud-gcp-kubernetes-cluster) |
-
+| [Amazon Web Services](https://github.com/GlueOps/terraform-module-cloud-aws-kubernetes-cluster)   |
 
 ### Deploying ArgoCD
 
