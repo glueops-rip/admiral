@@ -2,7 +2,13 @@
 
 ## Overview
 
-This Admiral repository will guide you on creating a captain (kubernetes cluster). You will need to follow these steps in this order:
+This Admiral repository will guide you on creating a captain (kubernetes cluster). 
+
+Pre-requisites:
+- https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites or have a file provided to you with all the outputs from this module
+
+
+You will need to follow these steps in this order:
 
 1) Create the kubernetes infra for the desired clouder provider
 2) Deploy ArgoCD onto the kubernetes cluster
