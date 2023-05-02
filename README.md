@@ -4,7 +4,7 @@
 
 This Admiral repository will guide you on creating a captain (kubernetes cluster). 
 
-Pre-requisites:
+Prerequisites:
 - https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites or have a file provided to you with all the outputs from this module
 
 
