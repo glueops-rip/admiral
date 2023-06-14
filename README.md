@@ -10,8 +10,7 @@ Prerequisites:
 
 You will need to follow these steps in this order:
 
-1) Create the kubernetes infra for the desired clouder provider
-2) Deploy ArgoCD onto the kubernetes cluster
+1) Create the kubernetes infra for the desired clouder providerss
 3) Deploying the GlueOps-Platform onto the kubernetes cluster
 4) Intialize/Unseal Vault
 5) Configure Vault
